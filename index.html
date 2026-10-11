@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>報價自動化架構藍圖</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231f3a5f'/%3E%3Crect x='7' y='7' width='18' height='4' fill='%23c97a0e'/%3E%3Crect x='7' y='14' width='12' height='4' fill='%23f4f0ea'/%3E%3Crect x='7' y='21' width='18' height='4' fill='%23f4f0ea'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -187,7 +188,6 @@ footer{margin-top:48px;padding:24px 0 40px;border-top:1px solid var(--line);colo
     <a href="#flows">四條工作流</a>
     <a href="#rules">分流與計價規則</a>
     <a href="#env">環境與帳號需求</a>
-    <a href="#starter">Claude Code 啟動包</a>
     <a href="#phases">導入階段</a>
     <a href="#confirm">待確認事項</a>
     <a href="#glossary">名詞對照</a>
@@ -204,7 +204,6 @@ footer{margin-top:48px;padding:24px 0 40px;border-top:1px solid var(--line);colo
       <li>Google Sheets 電子型錄</li>
       <li>圖面 AI 辨識</li>
       <li>LINE 通知</li>
-      <li>Claude Code 啟動包</li>
     </ul>
     <p class="status">v0.1 草案 · 2026-10-11 · 待貴公司確認</p>
 
@@ -334,17 +333,14 @@ footer{margin-top:48px;padding:24px 0 40px;border-top:1px solid var(--line);colo
     <line class="ln" x1="580" y1="580" x2="580" y2="620" marker-end="url(#ah)"/>
 
     <!-- 存取與開發層 y=620 -->
-    <text class="lbl" x="10" y="656">存取與開發層</text>
-    <rect class="bx" x="170" y="620" width="265" height="96" rx="8"/>
+    <text class="lbl" x="10" y="656">存取層</text>
+    <rect class="bx" x="170" y="620" width="402" height="96" rx="8"/>
     <text class="tt" x="186" y="650">Cloudflare</text>
     <text class="ts" x="186" y="674">DNS、Zero Trust Access</text>
     <text class="ts" x="186" y="696">保護 n8n 後台</text>
-    <rect class="bx" x="450" y="620" width="265" height="96" rx="8"/>
-    <text class="tt" x="466" y="650">n8n 沙箱</text>
-    <text class="ts" x="466" y="674">測試</text>
-    <rect class="bx" x="730" y="620" width="260" height="96" rx="8"/>
-    <text class="tt" x="746" y="650">Claude Code 啟動包</text>
-    <text class="ts" x="746" y="674">開發人員</text>
+    <rect class="bx" x="588" y="620" width="402" height="96" rx="8"/>
+    <text class="tt" x="604" y="650">n8n 沙箱</text>
+    <text class="ts" x="604" y="674">測試</text>
   </svg>
   </div>
 
@@ -360,7 +356,7 @@ footer{margin-top:48px;padding:24px 0 40px;border-top:1px solid var(--line);colo
     <div class="down">↓</div>
     <div class="layer"><h3>通知層</h3><ul><li>LINE Messaging API 官方帳號 → 設計師</li></ul></div>
     <div class="down">↓</div>
-    <div class="layer"><h3>存取與開發層</h3><ul><li>Cloudflare(DNS、Zero Trust Access 保護 n8n 後台)</li><li>n8n 沙箱(測試)</li><li>Claude Code 啟動包(開發人員)</li></ul></div>
+    <div class="layer"><h3>存取層</h3><ul><li>Cloudflare(DNS、Zero Trust Access 保護 n8n 後台)</li><li>n8n 沙箱(測試)</li></ul></div>
   </div>
 
   <p class="flow-line"><b>資料流:</b>型錄 → 資訊查詢;圖面 → AI 辨識 → 辨識清單 → 比價分流 → 命中寫預估價 / 未命中 LINE 詢價 → 設計師確認 → 報價單 PDF → Drive + LINE 通知。</p>
@@ -563,56 +559,9 @@ footer{margin-top:48px;padding:24px 0 40px;border-top:1px solid var(--line);colo
         <tr><td>LINE Developers</td><td>建立 Messaging API Channel(官方帳號)、取得 Channel access token、Webhook 指向 n8n;設計師加入官方帳號成為推播對象</td><td>LINE 官方帳號管理員</td></tr>
         <tr><td>AI 視覺模型</td><td>圖面辨識與型錄擷取用 API</td><td>供應商與費用由雙方核定後開通</td></tr>
         <tr><td>GitHub(私有倉庫)</td><td>工作流 JSON 版本管理;沙箱 → 主環境搬遷的中繼</td><td>貴公司 GitHub 帳號</td></tr>
-        <tr><td>Claude Code 啟動包</td><td>開發人員電腦安裝 Claude Code,經 n8n-MCP 連沙箱</td><td>Anthropic 帳號、開發人員電腦</td></tr>
       </tbody>
     </table>
   </div>
-</section>
-
-<section id="starter">
-  <h2>Claude Code 啟動包</h2>
-  <p>讓貴公司開發人員用 Claude Code 連接 n8n 沙箱,快速生成與修改工作流,並處理架構類問題;這個設定針對「n8n 工作流快速生成」專案,不是行銷用途。</p>
-
-  <div class="cols">
-    <div class="block">
-      <h3>啟動包內容</h3>
-      <ul>
-        <li>Claude Code 安裝與登入</li>
-        <li>專案資料夾:
-          <ul>
-            <li>CLAUDE.md(n8n 建置規則、環境說明、禁止事項)</li>
-            <li>workflows/(工作流 JSON 版本庫,連 GitHub 私有倉庫)</li>
-            <li>docs/(本藍圖、欄位對應表、搬遷 SOP)</li>
-          </ul>
-        </li>
-        <li>n8n-MCP 設定:只連「沙箱」的 API 位址與金鑰;主環境金鑰不放進 Claude Code</li>
-        <li>兩套環境分工:
-          <ul>
-            <li>沙箱=建置與測試(Claude Code 可直接建立、修改、測跑工作流)</li>
-            <li>主環境=正式執行(只透過匯入 JSON 更新,憑證由人手動綁定)</li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-    <div class="block">
-      <h3>權限邊界</h3>
-      <ul>
-        <li>Claude Code 只持有沙箱的 API 金鑰</li>
-        <li>主環境、Cloudflare、Google、LINE 的管理權限由貴公司保管</li>
-        <li>任何正式環境變更都經人手匯入與啟用</li>
-      </ul>
-    </div>
-  </div>
-
-  <h3 style="margin-top:24px">搬遷 SOP(沙箱 → 主環境)</h3>
-  <ol class="steps">
-    <li>在沙箱建置並用測試資料跑通</li>
-    <li>匯出工作流 JSON,提交到 GitHub</li>
-    <li>在主環境匯入 JSON</li>
-    <li>在主環境手動綁定憑證:Google(Drive / Sheets)、LINE、AI 模型</li>
-    <li>啟用工作流、確認 Webhook 正式網址</li>
-    <li>沙箱版本保留為下一輪修改的基礎</li>
-  </ol>
 </section>
 
 <section id="phases">
@@ -620,12 +569,12 @@ footer{margin-top:48px;padding:24px 0 40px;border-top:1px solid var(--line);colo
   <p>時程在需求範圍確認後排定。</p>
   <ol class="tl">
     <li><b>階段 0 盤點</b><br>工種清單、各廠商型錄取得方式與格式、計價單位規則、各工種利潤率、現行報價單模板、設計師名單</li>
-    <li><b>階段 1 環境建置</b><br>Zeabur 兩套 n8n、Cloudflare 存取保護、Google API 與 Drive 資料夾、LINE 官方帳號、Claude Code 啟動包</li>
+    <li><b>階段 1 環境建置</b><br>Zeabur 兩套 n8n、Cloudflare 存取保護、Google API 與 Drive 資料夾、LINE 官方帳號</li>
     <li><b>階段 2 型錄電子化</b><br>建立「資訊查詢」工作簿與工種分頁,完成首輪建檔(工作流 A)</li>
     <li><b>階段 3 圖面辨識試跑</b><br>以已完成的歷史設計案跑工作流 B,核對辨識結果與人工清單的差異</li>
     <li><b>階段 4 比價分流與 LINE 通知</b><br>工作流 C 上線,用歷史案驗證匹配結果</li>
     <li><b>階段 5 確認流程與報價單生成</b><br>工作流 D,對照歷史報價單核對格式</li>
-    <li><b>階段 6 上線與交接</b><br>設計師操作說明、開發人員啟動包移交、搬遷 SOP 演練</li>
+    <li><b>階段 6 上線與交接</b><br>設計師操作說明、沙箱 → 主環境搬遷演練</li>
   </ol>
 </section>
 
@@ -640,7 +589,6 @@ footer{margin-top:48px;padding:24px 0 40px;border-top:1px solid var(--line);colo
     <li>現行報價單模板(格式、欄位、簽核欄)</li>
     <li>設計師名單與 LINE 通知方式(個人推播或群組)</li>
     <li>要託管到 Cloudflare 的網域</li>
-    <li>開發人員與 Claude Code 使用人</li>
     <li>AI 視覺模型供應商與費用承擔方式</li>
   </ul>
 </section>
@@ -653,7 +601,6 @@ footer{margin-top:48px;padding:24px 0 40px;border-top:1px solid var(--line);colo
     <dt>分流</dt><dd>系統依工種把品項送到對應分頁比對,再依命中與否走不同路。</dd>
     <dt>沙箱</dt><dd>測試用 n8n,可隨意建置修改。</dd>
     <dt>主環境</dt><dd>正式運作的 n8n,只接受匯入與啟用。</dd>
-    <dt>啟動包</dt><dd>給開發人員的 Claude Code 設定組,含規則檔、版本庫與沙箱連線。</dd>
   </dl>
 </section>
 
